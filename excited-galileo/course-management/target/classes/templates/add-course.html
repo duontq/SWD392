@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Course</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; background-color: #f0f0f0; }
+        .container { background-color: #eaeaea; padding: 20px; border: 1px solid #ccc; border-radius: 5px; width: 400px; margin: 0 auto; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; display: flex; align-items: center; }
+        .form-group label { width: 80px; }
+        .form-group input { padding: 5px; border: 1px solid #ccc; }
+        .error { color: red; font-size: 0.8em; margin-left: 80px; display: block; }
+        .success { color: green; margin-bottom: 15px; }
+        .actions { margin-top: 20px; }
+        button, .btn { padding: 5px 15px; border: 1px solid #999; background-color: #e0e0e0; cursor: pointer; border-radius: 3px; text-decoration: none; color: black; font-size: 14px;}
+        button:hover, .btn:hover { background-color: #d0d0d0; }
+        .back-link { margin-top: 15px; display: inline-block; font-size: 14px;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div th:if="${successMessage}" class="success" th:text="${successMessage}"></div>
+
+    <form action="#" th:action="@{/add}" th:object="${course}" method="post">
+        <div class="form-group">
+            <label>Code</label>
+            <input type="text" th:field="*{code}" />
+        </div>
+        <span class="error" th:if="${#fields.hasErrors('code')}" th:errors="*{code}"></span>
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" th:field="*{name}" style="flex-grow: 1;" />
+        </div>
+        <span class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+
+        <div class="form-group">
+            <label>Credit</label>
+            <input type="number" th:field="*{credit}" style="width: 50px;" />
+        </div>
+        <span class="error" th:if="${#fields.hasErrors('credit')}" th:errors="*{credit}"></span>
+
+        <div class="actions">
+            <button type="submit">Add</button>
+            <button type="reset">Clear</button>
+        </div>
+    </form>
+    
+    <a href="/" class="back-link">Back to Menu</a>
+</div>
+
+</body>
+</html>
