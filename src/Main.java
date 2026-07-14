@@ -1,8 +1,8 @@
-package com.coursemanagement;
 
-import com.coursemanagement.controller.CourseController;
-import com.coursemanagement.model.CourseManager;
-import com.coursemanagement.view.MainFrame;
+
+import controller.CourseController;
+import model.CourseManager;
+import view.MainFrame;
 
 import javax.swing.*;
 

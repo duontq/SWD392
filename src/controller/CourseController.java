@@ -1,11 +1,11 @@
-package com.coursemanagement.controller;
+package controller;
 
-import com.coursemanagement.model.Course;
-import com.coursemanagement.model.CourseManager;
-import com.coursemanagement.view.AddCourseDialog;
-import com.coursemanagement.view.ListCourseDialog;
-import com.coursemanagement.view.MainFrame;
-import com.coursemanagement.view.SearchCourseDialog;
+import model.Course;
+import model.CourseManager;
+import view.AddCourseDialog;
+import view.ListCourseDialog;
+import view.MainFrame;
+import view.SearchCourseDialog;
 
 import javax.swing.*;
 import java.util.List;

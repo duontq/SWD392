@@ -1,4 +1,4 @@
-package com.coursemanagement.model;
+package model;
 
 public class Course {
     private String code;
