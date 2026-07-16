@@ -1,7 +1,6 @@
-
-
 import controller.CourseController;
-import model.CourseManager;
+import repository.InMemoryCourseRepository;
+import service.CourseService;
 import view.MainFrame;
 
 import javax.swing.*;
@@ -17,11 +16,13 @@ public class Main {
                 // Ignore and use default Look and Feel
             }
 
-            CourseManager manager = new CourseManager();
+            // Cấu trúc Dependency Injection để tuân thủ Dependency Inversion Principle (DIP)
+            InMemoryCourseRepository repository = new InMemoryCourseRepository();
+            CourseService service = new CourseService(repository);
             MainFrame mainFrame = new MainFrame();
             
             // Wire MVC
-            new CourseController(manager, mainFrame);
+            new CourseController(service, mainFrame);
             
             mainFrame.setVisible(true);
         });

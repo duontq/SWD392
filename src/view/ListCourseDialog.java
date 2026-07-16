@@ -1,18 +1,28 @@
 package view;
 
+import model.Course;
+import observer.IObserver;
+import service.CourseService;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
-public class ListCourseDialog extends JDialog {
+public class ListCourseDialog extends JDialog implements IObserver {
     private JTextArea textArea;
+    private CourseService courseService;
 
-    public ListCourseDialog(JFrame parent) {
+    public ListCourseDialog(JFrame parent, CourseService courseService) {
         super(parent, "List Course", true);
+        this.courseService = courseService;
+        this.courseService.registerObserver(this); // Đăng ký làm Observer
+        
         setSize(400, 300);
         setLocationRelativeTo(parent);
         setResizable(false);
 
         initComponents();
+        update(); // Load data initially
     }
 
     private void initComponents() {
@@ -32,7 +42,14 @@ public class ListCourseDialog extends JDialog {
         add(panel);
     }
 
-    public void setCoursesText(String text) {
-        textArea.setText(text);
+    @Override
+    public void update() {
+        // Hàm này sẽ được CourseService gọi tự động khi có thêm Course mới
+        List<Course> courses = courseService.getCoursesOrderedByCredit();
+        StringBuilder sb = new StringBuilder();
+        for (Course c : courses) {
+            sb.append(String.format("%-8s | %-15s | %d\n", c.getCode(), c.getName(), c.getCredit()));
+        }
+        textArea.setText(sb.toString());
     }
 }

@@ -1,29 +1,30 @@
 package controller;
 
 import model.Course;
-import model.CourseManager;
+import service.CourseService;
 import view.AddCourseDialog;
 import view.ListCourseDialog;
 import view.MainFrame;
 import view.SearchCourseDialog;
 
 import javax.swing.*;
-import java.util.List;
 
 public class CourseController {
-    private CourseManager manager;
+    private CourseService service;
     private MainFrame mainFrame;
     private AddCourseDialog addDialog;
     private SearchCourseDialog searchDialog;
     private ListCourseDialog listDialog;
 
-    public CourseController(CourseManager manager, MainFrame mainFrame) {
-        this.manager = manager;
+    public CourseController(CourseService service, MainFrame mainFrame) {
+        this.service = service;
         this.mainFrame = mainFrame;
         
         this.addDialog = new AddCourseDialog(mainFrame);
         this.searchDialog = new SearchCourseDialog(mainFrame);
-        this.listDialog = new ListCourseDialog(mainFrame);
+        
+        // Pass service to view so it can observe data changes (Observer Pattern)
+        this.listDialog = new ListCourseDialog(mainFrame, service); 
 
         initController();
     }
@@ -36,7 +37,7 @@ public class CourseController {
         });
 
         mainFrame.getBtnDisplayCourses().addActionListener(e -> {
-            displayAllCourses();
+            // No need to manually fetch and set data. Observer pattern handles it automatically!
             listDialog.setVisible(true);
         });
 
@@ -52,7 +53,6 @@ public class CourseController {
 
         // Add Dialog Buttons
         addDialog.getBtnAdd().addActionListener(e -> addCourse());
-        
         addDialog.getBtnClear().addActionListener(e -> addDialog.clearFields());
 
         // Search Dialog Buttons
@@ -71,23 +71,18 @@ public class CourseController {
 
         try {
             int credit = Integer.parseInt(creditStr);
-            if (credit <= 0 || credit > 33) {
-                JOptionPane.showMessageDialog(addDialog, "Credit must be a positive number and less than or equals to 33.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
-            if (manager.searchCourseByCode(code) != null) {
-                JOptionPane.showMessageDialog(addDialog, "Course with this code already exists.", "Error", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-
             Course course = new Course(code, name, credit);
-            manager.addCourse(course);
+            
+            // Delegate logic and validation to Service
+            service.addCourse(course); 
+            
             JOptionPane.showMessageDialog(addDialog, "Course added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             addDialog.setVisible(false);
 
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(addDialog, "Credit must be a valid number.", "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(addDialog, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -98,7 +93,7 @@ public class CourseController {
             return;
         }
 
-        Course course = manager.searchCourseByCode(code);
+        Course course = service.searchCourseByCode(code);
         if (course != null) {
             searchDialog.getTxtCourseName().setText(course.getName());
             searchDialog.getTxtCredit().setText(String.valueOf(course.getCredit()));
@@ -106,14 +101,5 @@ public class CourseController {
             searchDialog.clearResults();
             JOptionPane.showMessageDialog(searchDialog, "Course not found.", "Information", JOptionPane.INFORMATION_MESSAGE);
         }
-    }
-
-    private void displayAllCourses() {
-        List<Course> courses = manager.getCoursesOrderedByCredit();
-        StringBuilder sb = new StringBuilder();
-        for (Course c : courses) {
-            sb.append(String.format("%-8s | %-15s | %d\n", c.getCode(), c.getName(), c.getCredit()));
-        }
-        listDialog.setCoursesText(sb.toString());
     }
 }
