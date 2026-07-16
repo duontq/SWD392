@@ -1,7 +1,7 @@
 import controller.CourseController;
 import repository.InMemoryCourseRepository;
 import service.CourseService;
-import view.MainFrame;
+import view.CourseManagement;
 
 import javax.swing.*;
 
@@ -19,12 +19,13 @@ public class Main {
             // Cấu trúc Dependency Injection để tuân thủ Dependency Inversion Principle (DIP)
             InMemoryCourseRepository repository = new InMemoryCourseRepository();
             CourseService service = new CourseService(repository);
-            MainFrame mainFrame = new MainFrame();
+            CourseManagement CourseManagement = new CourseManagement();
             
             // Wire MVC
-            new CourseController(service, mainFrame);
+            new CourseController(service, CourseManagement);
             
-            mainFrame.setVisible(true);
+            CourseManagement.setVisible(true);
         });
     }
 }
+

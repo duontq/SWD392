@@ -3,13 +3,13 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class SearchCourseDialog extends JDialog {
+public class SearchCourse extends JDialog {
     private JTextField txtEnterCode;
     private JTextField txtCourseName;
     private JTextField txtCredit;
     private JButton btnSearch;
 
-    public SearchCourseDialog(JFrame parent) {
+    public SearchCourse(JFrame parent) {
         super(parent, "Search Course", true);
         setSize(400, 200);
         setLocationRelativeTo(parent);
@@ -65,3 +65,4 @@ public class SearchCourseDialog extends JDialog {
         txtCredit.setText("");
     }
 }
+

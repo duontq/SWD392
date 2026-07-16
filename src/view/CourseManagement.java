@@ -3,13 +3,13 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class MainFrame extends JFrame {
+public class CourseManagement extends JFrame {
     private JButton btnAddCourse;
     private JButton btnDisplayCourses;
     private JButton btnSearchCourse;
     private JButton btnExit;
 
-    public MainFrame() {
+    public CourseManagement() {
         setTitle("Courses Management");
         setSize(350, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -46,3 +46,4 @@ public class MainFrame extends JFrame {
     public JButton getBtnSearchCourse() { return btnSearchCourse; }
     public JButton getBtnExit() { return btnExit; }
 }
+

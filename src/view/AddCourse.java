@@ -3,14 +3,14 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-public class AddCourseDialog extends JDialog {
+public class AddCourse extends JDialog {
     private JTextField txtCode;
     private JTextField txtName;
     private JTextField txtCredit;
     private JButton btnAdd;
     private JButton btnClear;
 
-    public AddCourseDialog(JFrame parent) {
+    public AddCourse(JFrame parent) {
         super(parent, "Add Course", true);
         setSize(350, 200);
         setLocationRelativeTo(parent);
@@ -69,3 +69,4 @@ public class AddCourseDialog extends JDialog {
         txtCredit.setText("");
     }
 }
+

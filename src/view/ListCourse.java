@@ -8,11 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class ListCourseDialog extends JDialog implements IObserver {
+public class ListCourse extends JDialog implements IObserver {
     private JTextArea textArea;
     private CourseService courseService;
 
-    public ListCourseDialog(JFrame parent, CourseService courseService) {
+    public ListCourse(JFrame parent, CourseService courseService) {
         super(parent, "List Course", true);
         this.courseService = courseService;
         this.courseService.registerObserver(this); // Đăng ký làm Observer
@@ -53,3 +53,4 @@ public class ListCourseDialog extends JDialog implements IObserver {
         textArea.setText(sb.toString());
     }
 }
+

@@ -2,52 +2,52 @@ package controller;
 
 import model.Course;
 import service.CourseService;
-import view.AddCourseDialog;
-import view.ListCourseDialog;
-import view.MainFrame;
-import view.SearchCourseDialog;
+import view.AddCourse;
+import view.ListCourse;
+import view.CourseManagement;
+import view.SearchCourse;
 
 import javax.swing.*;
 
 public class CourseController {
     private CourseService service;
-    private MainFrame mainFrame;
-    private AddCourseDialog addDialog;
-    private SearchCourseDialog searchDialog;
-    private ListCourseDialog listDialog;
+    private CourseManagement CourseManagement;
+    private AddCourse addDialog;
+    private SearchCourse searchDialog;
+    private ListCourse listDialog;
 
-    public CourseController(CourseService service, MainFrame mainFrame) {
+    public CourseController(CourseService service, CourseManagement CourseManagement) {
         this.service = service;
-        this.mainFrame = mainFrame;
+        this.CourseManagement = CourseManagement;
         
-        this.addDialog = new AddCourseDialog(mainFrame);
-        this.searchDialog = new SearchCourseDialog(mainFrame);
+        this.addDialog = new AddCourse(CourseManagement);
+        this.searchDialog = new SearchCourse(CourseManagement);
         
         // Pass service to view so it can observe data changes (Observer Pattern)
-        this.listDialog = new ListCourseDialog(mainFrame, service); 
+        this.listDialog = new ListCourse(CourseManagement, service); 
 
         initController();
     }
 
     private void initController() {
         // Main Frame Buttons
-        mainFrame.getBtnAddCourse().addActionListener(e -> {
+        CourseManagement.getBtnAddCourse().addActionListener(e -> {
             addDialog.clearFields();
             addDialog.setVisible(true);
         });
 
-        mainFrame.getBtnDisplayCourses().addActionListener(e -> {
+        CourseManagement.getBtnDisplayCourses().addActionListener(e -> {
             // No need to manually fetch and set data. Observer pattern handles it automatically!
             listDialog.setVisible(true);
         });
 
-        mainFrame.getBtnSearchCourse().addActionListener(e -> {
+        CourseManagement.getBtnSearchCourse().addActionListener(e -> {
             searchDialog.getTxtEnterCode().setText("");
             searchDialog.clearResults();
             searchDialog.setVisible(true);
         });
 
-        mainFrame.getBtnExit().addActionListener(e -> {
+        CourseManagement.getBtnExit().addActionListener(e -> {
             System.exit(0);
         });
 
@@ -103,3 +103,4 @@ public class CourseController {
         }
     }
 }
+

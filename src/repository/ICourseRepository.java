@@ -8,3 +8,4 @@ public interface ICourseRepository {
     Course findByCode(String code);
     List<Course> findAll();
 }
+

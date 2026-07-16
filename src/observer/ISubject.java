@@ -5,3 +5,4 @@ public interface ISubject {
     void removeObserver(IObserver observer);
     void notifyObservers();
 }
+
